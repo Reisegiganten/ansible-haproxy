@@ -12,6 +12,7 @@
   with_items:
   - haproxy
   - socat
+  - make
 
 - name: "enable haproxy"
   service:

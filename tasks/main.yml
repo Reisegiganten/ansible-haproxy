@@ -1,10 +1,4 @@
 ---
-- name: "add haproxy apt repo"
-  apt_repository:
-    repo: "ppa:vbernat/haproxy-1.6"
-    state: present
-    update_cache: yes
-
 - name: "install haproxy"
   apt:
     pkg: "{{ item }}"
@@ -43,13 +37,13 @@
   template:
     src: "frontend.cfg.j2"
     dest: "{{ haproxy_config_path }}/frontend.d/{{ item }}.cfg"
-  with_items: "{{ haproxy_frontends.keys()}}"
+  with_items: "{{ haproxy_frontends.keys() | list }}"
 
 - name: "setup backend"
   template:
     src: "backend.cfg.j2"
     dest: "{{ haproxy_config_path }}/backend.d/{{ item }}.cfg"
-  with_items: "{{ haproxy_backends.keys()}}"
+  with_items: "{{ haproxy_backends.keys() | list }}"
 
 - name: "set makefile"
   copy:
